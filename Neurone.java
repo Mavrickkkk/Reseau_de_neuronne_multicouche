@@ -2,7 +2,7 @@ public class Neurone {
     public double[] poids;
     private double biais;
     private double sortie;
-    private double[] entrees; // Nouvel attribut pour stocker les entrées lors de l'activation
+    private double[] entrees;
 
     public Neurone(int nbEntrees) {
         // Initialiser les poids et le biais de manière aléatoire
