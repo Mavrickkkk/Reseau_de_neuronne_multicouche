@@ -8,7 +8,14 @@ public class Couche {
         }
     }
 
-    // Méthode pour obtenir les sorties de la couche
+    public Couche(int nbNeurones) {
+        neurones = new Neurone[nbNeurones];
+        for (int i = 0; i < nbNeurones; i++) {
+            neurones[i] = new Neurone(1.0);
+        }
+    }
+
+    // Méthode spour obtenir les sorties de la couche
     public double[] getSorties(double[] entrees) {
         double[] sorties = new double[neurones.length];
         for (int i = 0; i < neurones.length; i++) {
@@ -17,11 +24,30 @@ public class Couche {
         return sorties;
     }
 
-    // Méthode de rétropropagation du gradient pour une couche
-    public void retropropagation(double[] erreurs, double tauxApprentissage) {
+    public double[] getSortiesEntree(double[] entrees) {
+        double[] sorties = new double[neurones.length];
         for (int i = 0; i < neurones.length; i++) {
-            double erreurNeurone = erreurs[i];
-            neurones[i].retropropagation(erreurNeurone, tauxApprentissage);
+            sorties[i] = neurones[i].activationEntree(entrees[i]);
+        }
+        return sorties;
+    }
+
+    public void retropropagation(Couche suivante) {
+        for (int i = 0; i < neurones.length; i++) {
+            neurones[i].calculerGradients(suivante, i);
         }
     }
+
+    public void retropropagationSortie(double[] valeurAttendue) {
+        for (int i = 0; i < neurones.length; i++) {
+            neurones[i].calculerGradientSortie(valeurAttendue[i]);
+        }
+    }
+
+    public void mettreAJourPoids(double tauxApprentissage) {
+        for (int i = 0; i < neurones.length; i++) {
+            neurones[i].mettreAJourPoids(tauxApprentissage);
+        }
+    }
+
 }

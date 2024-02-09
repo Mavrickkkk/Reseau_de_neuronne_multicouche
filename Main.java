@@ -1,21 +1,19 @@
 public class Main {
     public static void main(String[] args) {
-        int[] architecture = { 2, 3, 1 };
+
+        int[] architecture = { 2, 10, 5, 1 };
+
+        // Créer le réseau de neurones
         ReseauNeurones reseau = new ReseauNeurones(architecture);
 
-        double[] entrees = { 0.5, 0.8 };
-        double[] cibles = { 0.2 }; // Exemple de cible, vous devez ajuster cela en fonction de votre tâche
+        // Données d'entraînement pour la fonction XOR
+        double[][] entrees = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+        double[][] sortiesAttendues = { { 0 }, { 1 }, { 1 }, { 0 } };
 
-        // Entraînement avec rétropropagation du gradient
-        double tauxApprentissage = 0.1; // Vous devez ajuster cela en fonction de votre tâche
-        reseau.entrainement(entrees, cibles, tauxApprentissage);
+        // Entraîner le réseau de neurones
+        double tauxApprentissage = 0.1;
+        int epochs = 3000;
+        reseau.entrainer(entrees, sortiesAttendues, tauxApprentissage, epochs);
 
-        // Utilisation du réseau après l'entraînement
-        double[] sorties = reseau.getSorties(entrees);
-
-        // Afficher les sorties du réseau
-        for (double sortie : sorties) {
-            System.out.println("Sortie : " + sortie);
-        }
     }
 }
